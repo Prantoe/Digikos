@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
@@ -19,17 +18,17 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-//API route for register new user
+//register new user
 Route::post('/register', [App\Http\Controllers\API\AuthController::class, 'register']);
-//API route for login user
+//login user
 Route::post('/login', [App\Http\Controllers\API\AuthController::class, 'login']);
 
 //Protecting Routes
 Route::group(['middleware' => ['auth:sanctum']], function () {
-    Route::get('/profile', function (Request $request) {
-        return auth()->user();
-    });
+    // current login
+    Route::get('/owner/current', [App\Http\Controllers\API\OwnerController::class, 'current']);
+    Route::get('/owner/property', [App\Http\Controllers\API\OwnerController::class, 'property']);
 
-    // API route for logout user
+    // logout user
     Route::post('/logout', [App\Http\Controllers\API\AuthController::class, 'logout']);
 });
